@@ -6,7 +6,7 @@ Does not modify log.py; CLI tools are unaffected.
 import sqlite3
 import time
 
-from raspisump.log import DB_PATH
+from raspisump.log import DB_PATH, _init_db
 
 
 def day_stats(date=None):
@@ -20,6 +20,7 @@ def day_stats(date=None):
 
     conn = sqlite3.connect(DB_PATH)
     try:
+        _init_db(conn)
         row = conn.execute(
             """
             SELECT

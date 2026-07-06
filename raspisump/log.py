@@ -65,6 +65,7 @@ def query_readings(date: str = None, last: int = None) -> list:
     """
     conn = sqlite3.connect(DB_PATH)
     try:
+        _init_db(conn)
         if last is not None:
             rows = conn.execute(
                 "SELECT ts, water_depth, unit FROM readings"
@@ -199,6 +200,7 @@ def query_readings_range(
     end_ts = f"{end_date} {end_time}:59" if end_time else f"{end_date} 23:59:59"
     conn = sqlite3.connect(DB_PATH)
     try:
+        _init_db(conn)
         return conn.execute(
             "SELECT ts, water_depth, unit FROM readings"
             " WHERE ts >= ? AND ts <= ? ORDER BY ts",
